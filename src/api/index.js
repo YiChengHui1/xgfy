@@ -4,21 +4,20 @@ import https from 'https'
 
 axios.defaults.timeout = 15000
 
-export const base = 'https://www.xtpta.cn:10089/api/v1/pub'// https
+export const base = 'https://wuliang.art'// https
 
 // 在request拦截器实现
 axios.interceptors.request.use(
   config => {
     config.httpsAgent = new https.Agent({
-      rejectUnauthorized: false,
+      rejectUnauthorized: false, // 针对单个请求忽略证书检查
       ca: 'localhost'
     })
     Vue.prototype.$Spin.show()
     // this.$store.commit('UPDATE_ISCOMPECT', true)
-    setTimeout(() => {
-      Vue.prototype.$Spin.hide()
-      // this.$store.dispatch('UPDATE_STEP_NODE_DATA', {})
-    }, 500)
+    // setTimeout(() => {
+    //   Vue.prototype.$Spin.hide()
+    // }, 500)
     // const url = config.url
     // if (url.indexOf('login') > -1) {
     //   config.headers.Authorization = ''
