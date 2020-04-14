@@ -94,7 +94,7 @@ export default {
   methods: {
     drawChart () {
       // 基于准备好的dom，初始化echarts实例
-      let tempJson = {}
+      let tempJson = [{jsondata: {}}]
       tempJson = this.provinceJSONList.filter(item => item.name === this.provinceNameEn)
       // console.log(tempJson, this.provinceNameEn, this.provinceJSONList)
       this.$echarts.registerMap('province', tempJson[0].jsondata)

@@ -120,6 +120,9 @@ export default {
           break
       }
     }
+  },
+  created () {
+    console.log(this.provinceName)
   }
 
 }
