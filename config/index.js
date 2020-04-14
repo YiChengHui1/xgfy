@@ -11,13 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/ncov': {
-        target: 'https://wuliang.art', //访问地址
-        changeOrigin: true,
-        pathRewrite: {
-          '^/ncov': '/'
-        }
-      }
+      // '/ncov': {
+      //   target: 'https://wuliang.art/ncov', //访问地址
+      //   changeOrigin: true, //允许跨域
+      //   pathRewrite: {
+      //     '^/ncov': ''
+      //   }
+      // }
     },
 
     // Various Dev Server settings

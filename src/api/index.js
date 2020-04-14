@@ -4,7 +4,7 @@ import https from 'https'
 
 axios.defaults.timeout = 15000
 
-export const base = 'https://wuliang.art'// https
+export const base = 'https://wuliang.art/ncov'// https
 
 // 在request拦截器实现
 axios.interceptors.request.use(
@@ -14,30 +14,11 @@ axios.interceptors.request.use(
       ca: 'localhost'
     })
     Vue.prototype.$Spin.show()
-    // this.$store.commit('UPDATE_ISCOMPECT', true)
-    // setTimeout(() => {
-    //   Vue.prototype.$Spin.hide()
-    // }, 500)
-    // const url = config.url
-    // if (url.indexOf('login') > -1) {
-    //   config.headers.Authorization = ''
-    // }
-    // if (url.indexOf('login') < 0) {
-    //   config.headers.Authorization = Math.round(
-    //     new Date().getTime() / 1000 -
-    //     store.getters.expires
-    //   ).toString() >
-    //   7 * 24 * 3000
-    //     ? store.dispatch('SET_TOKEN', '')
-    //     : `Bearer ${store.getters.token}`
-    // }
     return config
   },
   error => {
     setTimeout(() => {
       Vue.prototype.$Spin.hide()
-      // this.$store.commit('UPDATE_ISCOMPECT', false)
-
       Vue.prototype.$Message.warning('加载超时')
     }, 3000)
     return Promise.reject(error)
@@ -50,25 +31,22 @@ axios.interceptors.response.use(
     if (response.status === 200) {
       setTimeout(() => {
         Vue.prototype.$Spin.hide()
-        // this.$store.commit('UPDATE_ISCOMPECT', false)
       }, 1000)
       return response
     } else {
       Vue.prototype.$Spin.hide()
-      // this.$store.commit('UPDATE_ISCOMPECT', false)
 
       Vue.prototype.$Message.error('请求失败')
     }
   },
   error => {
-    let msg = error.response.data.error.message
-    if (error.response.status === 500) {
-      msg = '网络异常'
-    }
+    console.log(error)
+    // let msg = error.response.error.message
+    // if (error.response.status === 500) {
+    //   msg = '网络异常'
+    // }
     Vue.prototype.$Spin.hide()
-    // this.$store.commit('UPDATE_ISCOMPECT', false)
-
-    Vue.prototype.$Message.error(msg)
+    Vue.prototype.$Message.error('网络异常')
     return Promise.reject(error)
   }
 )
@@ -87,5 +65,7 @@ export const GET = (url, params) => {
     .get(`${base}/${url}`, {
       params: params
     })
-    .then(res => res)
+    .then(res => {
+      return res
+    })
 }
