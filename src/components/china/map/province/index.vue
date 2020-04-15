@@ -3,43 +3,43 @@
 </template>
 <script>
 // 一共34个省份信息
-import anhuiJson from '../../../../assets/map/province/anhui.json'
-import aomenJson from '../../../../assets/map/province/aomen.json'
-import beijingJson from '../../../../assets/map/province/beijing.json'
-import chongqingJson from '../../../../assets/map/province/chongqing.json'
-import fujianJson from '../../../../assets/map/province/fujian.json'
-import gansuJson from '../../../../assets/map/province/gansu.json'
-import guangdongJson from '../../../../assets/map/province/guangdong.json'
-import guangxiJson from '../../../../assets/map/province/guangxi.json'
-import guizhouJson from '../../../../assets/map/province/guizhou.json'
-import hainanJson from '../../../../assets/map/province/hainan.json'
+import anhuiJson from '@/assets/map/province/anhui.json'
+import aomenJson from '@/assets/map/province/aomen.json'
+import beijingJson from '@/assets/map/province/beijing.json'
+import chongqingJson from '@/assets/map/province/chongqing.json'
+import fujianJson from '@/assets/map/province/fujian.json'
+import gansuJson from '@/assets/map/province/gansu.json'
+import guangdongJson from '@/assets/map/province/guangdong.json'
+import guangxiJson from '@/assets/map/province/guangxi.json'
+import guizhouJson from '@/assets/map/province/guizhou.json'
+import hainanJson from '@/assets/map/province/hainan.json'
 
-import hebeiJson from '../../../../assets/map/province/hebei.json'
-import heilongjiangJson from '../../../../assets/map/province/heilongjiang.json'
-import henanJson from '../../../../assets/map/province/henan.json'
-import hubeiJson from '../../../../assets/map/province/hubei.json'
-import hunanJson from '../../../../assets/map/province/hunan.json'
-import jiangsuJson from '../../../../assets/map/province/jiangsu.json'
-import jiangxiJson from '../../../../assets/map/province/jiangxi.json'
-import jilinJson from '../../../../assets/map/province/jilin.json'
-import liaoningJson from '../../../../assets/map/province/liaoning.json'
-import neimengguJson from '../../../../assets/map/province/neimenggu.json'
+import hebeiJson from '@/assets/map/province/hebei.json'
+import heilongjiangJson from '@/assets/map/province/heilongjiang.json'
+import henanJson from '@/assets/map/province/henan.json'
+import hubeiJson from '@/assets/map/province/hubei.json'
+import hunanJson from '@/assets/map/province/hunan.json'
+import jiangsuJson from '@/assets/map/province/jiangsu.json'
+import jiangxiJson from '@/assets/map/province/jiangxi.json'
+import jilinJson from '@/assets/map/province/jilin.json'
+import liaoningJson from '@/assets/map/province/liaoning.json'
+import neimengguJson from '@/assets/map/province/neimenggu.json'
 
-import ningxiaJson from '../../../../assets/map/province/ningxia.json'
-import qinghaiJson from '../../../../assets/map/province/qinghai.json'
-import shandongJson from '../../../../assets/map/province/shandong.json'
-import shanghaiJson from '../../../../assets/map/province/shanghai.json'
-import shanxiJson from '../../../../assets/map/province/shanxi.json'
-import shanxi1Json from '../../../../assets/map/province/shanxi1.json'
-import sichuanJson from '../../../../assets/map/province/sichuan.json'
-import taiwanJson from '../../../../assets/map/province/taiwan.json'
-import tianjinJson from '../../../../assets/map/province/tianjin.json'
-import xianggangJson from '../../../../assets/map/province/xianggang.json'
+import ningxiaJson from '@/assets/map/province/ningxia.json'
+import qinghaiJson from '@/assets/map/province/qinghai.json'
+import shandongJson from '@/assets/map/province/shandong.json'
+import shanghaiJson from '@/assets/map/province/shanghai.json'
+import shanxiJson from '@/assets/map/province/shanxi.json'
+import shanxi1Json from '@/assets/map/province/shanxi1.json'
+import sichuanJson from '@/assets/map/province/sichuan.json'
+import taiwanJson from '@/assets/map/province/taiwan.json'
+import tianjinJson from '@/assets/map/province/tianjin.json'
+import xianggangJson from '@/assets/map/province/xianggang.json'
 
-import xinjiangJson from '../../../../assets/map/province/xinjiang.json'
-import xizangJson from '../../../../assets/map/province/xizang.json'
-import yunnanJson from '../../../../assets/map/province/yunnan.json'
-import zhejiangJson from '../../../../assets/map/province/zhejiang.json'
+import xinjiangJson from '@/assets/map/province/xinjiang.json'
+import xizangJson from '@/assets/map/province/xizang.json'
+import yunnanJson from '@/assets/map/province/yunnan.json'
+import zhejiangJson from '@/assets/map/province/zhejiang.json'
 
 import { mapGetters } from 'vuex'
 export default {
@@ -96,7 +96,6 @@ export default {
       // 基于准备好的dom，初始化echarts实例
       let tempJson = [{jsondata: {}}]
       tempJson = this.provinceJSONList.filter(item => item.name === this.provinceNameEn)
-      // console.log(tempJson, this.provinceNameEn, this.provinceJSONList)
       this.$echarts.registerMap('province', tempJson[0].jsondata)
       const dom = document.getElementById('province-map')
       let myChart = this.$echarts.init(dom)
@@ -218,14 +217,12 @@ export default {
           }
         ]
       }
-      // console.log(this.selectProvinceMapData, this.chooseStatus)
       if (option && typeof option === 'object') {
         myChart.setOption(option, true)
       }
     }
   },
   mounted () {
-    // console.log(this.geoIndex, 111111)
     this.drawChart()
   },
   watch: {

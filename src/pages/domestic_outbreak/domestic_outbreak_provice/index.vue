@@ -47,6 +47,11 @@
             ></province-map>
           </div>
         </div>
+        <div class="middle-content-right">
+          <div class="chart-wrap">
+            <province-chart v-if="isProvinceChartShow" :provinceChartData="provinceChartData"></province-chart>
+          </div>
+        </div>
       </div>
     </Content>
 
@@ -56,6 +61,8 @@
 <script>
 import Header from '@/components/common/header' // 引入头部组件
 import ProvinceMap from '@/components/china/map/province'
+import ProvinceChart from '@/components/china/line/province_history_data_chart.vue'
+import {getProvinceHistoryList} from '@/api/data.js'
 import { mapGetters } from 'vuex'
 export default {
   data () {
@@ -79,7 +86,9 @@ export default {
         {status: false}
       ],
       provinceNowConfirmBtnStr: '现有确诊',
-      provinceStatusIndex: 0
+      provinceStatusIndex: 0,
+      isProvinceChartShow: false, // 是否显示省级历史数据图表
+      provinceChartData: [] // 省级图表数据
     }
   },
   computed: {
@@ -87,7 +96,8 @@ export default {
   },
   components: {
     'common-header': Header,
-    'province-map': ProvinceMap
+    'province-map': ProvinceMap,
+    'province-chart': ProvinceChart
   },
   methods: {
     clearAndChangeConfirm (list, status, num) {
@@ -119,10 +129,26 @@ export default {
         default:
           break
       }
+    },
+    // 获取该省的历史数据
+    async getProvinceHistoryListFun () {
+      let params = {
+        provinceName: this.provinceName
+      }
+      let res = await getProvinceHistoryList(params)
+      if (res.status === 200) {
+        this.provinceChartData = res.data.data
+        this.isProvinceChartShow = true
+      }
     }
   },
   created () {
-    console.log(this.provinceName)
+    this.getProvinceHistoryListFun()
+  },
+  watch: {
+    provinceName: function (newNum, oldNum) {
+      this.getProvinceHistoryListFun()
+    }
   }
 
 }
@@ -237,8 +263,9 @@ export default {
     .middle-content {
       width: 100%;
       padding: 1rem 2rem;
+      display: flex;
       .middle-content-left {
-        width: 60%;
+        width: 50%;
         height: 25rem;
         .map-wrap {
           width: 100%;
@@ -279,7 +306,7 @@ export default {
           }
           .back-to-previous{
             position: absolute;
-            left: 30rem;
+            left: 25rem;
             top: 0;
             float: left;
             z-index: 2;
@@ -290,6 +317,14 @@ export default {
               height: 2rem;
             }
           }
+        }
+      }
+      .middle-content-right{
+        width: 50%;
+        height: 25rem;
+        .chart-wrap{
+          width: 100%;
+          height:100%;
         }
       }
     }

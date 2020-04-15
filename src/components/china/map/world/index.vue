@@ -1,9 +1,9 @@
 <template>
-  <div id="china-map"></div>
+  <div id="word-map"></div>
 </template>
 <script>
-import chinaJson from '@/assets/map/china.json'
-import {convertCN2EN} from '@/utils/getProvinceName.js'
+import chinaJson from '@/assets/map/world-map.json'
+import { convertEN2CN } from '@/utils/getCountryName.js'
 // import chinaJson from '../../../utils/json/china.json'
 import { mapGetters } from 'vuex'
 export default {
@@ -18,20 +18,20 @@ export default {
     drawChart () {
       // 基于准备好的dom，初始化echarts实例
       this.$echarts.registerMap('china', chinaJson)
-      const dom = document.getElementById('china-map')
+      const dom = document.getElementById('word-map')
       let myChart = this.$echarts.init(dom)
-      myChart.on('click', (params) => {
-        if (params.name !== '南海诸岛') {
-          this.$store.commit('CHANGE_PROVINCE_NAME', {provinceName: params.name})
-          let nameEn = convertCN2EN(params.name)
-          this.$store.commit('CHANGE_PROVINCE_NAME_EN', {provinceNameEn: nameEn})
-          let res = this.provinceCardData.filter(item => item.name === params.name)
-          this.$store.commit('CHANGE_SELECT_PROVINCE_CARD_DATA', {selectProvinceCardData: res[0].list})
-          let res2 = this.provinceMapData.filter(item => item.name === params.name)
-          this.$store.commit('CHANGE_SELECT_PROVINCE_MAP_DATA', {selectProvinceMapData: res2[0].list})
-          this.$router.push({path: 'province'})
-        }
-      })
+      // myChart.on('click', (params) => {
+      //   if (params.name !== '南海诸岛') {
+      //     this.$store.commit('CHANGE_PROVINCE_NAME', {provinceName: params.name})
+      //     let nameEn = convertCN2EN(params.name)
+      //     this.$store.commit('CHANGE_PROVINCE_NAME_EN', {provinceNameEn: nameEn})
+      //     let res = this.provinceCardData.filter(item => item.name === params.name)
+      //     this.$store.commit('CHANGE_SELECT_PROVINCE_CARD_DATA', {selectProvinceCardData: res[0].list})
+      //     let res2 = this.provinceMapData.filter(item => item.name === params.name)
+      //     this.$store.commit('CHANGE_SELECT_PROVINCE_MAP_DATA', {selectProvinceMapData: res2[0].list})
+      //     this.$router.push({path: 'province'})
+      //   }
+      // })
       setTimeout(function () {
         window.onresize = function () {
           myChart.resize()
@@ -40,7 +40,7 @@ export default {
       // 指定图表的配置项和数据
       let option = {
         title: {
-          text: 'COVID-19疫情地图(中国)',
+          text: 'COVID-19疫情地图(世界)',
           top: '10%',
           textAlign: 'center',
           left: '50%'
@@ -48,6 +48,8 @@ export default {
         tooltip: {
           triggerOn: 'mousemove',
           formatter: function (e, t, n) {
+            console.log(e.name, e.seriesName, convertEN2CN(e.name))
+            convertEN2CN('China')
             return !e.value && e.value !== 0
               ? e.name + '：暂无数据'
               : e.name + '<br />' + e.seriesName + '：' + e.value
@@ -58,7 +60,7 @@ export default {
           max: 1000,
           left: 10,
           bottom: 40,
-          showLabel: !0,
+          showLabel: false,
           // text: ['高', '低'],
           pieces: [
             {
@@ -115,7 +117,7 @@ export default {
           top: 50,
           label: {
             normal: {
-              show: !0,
+              show: false,
               fontSize: '14',
               color: 'rgba(0,0,0,0.7)'
             }
@@ -138,6 +140,14 @@ export default {
           {
             name: this.chooseStatus,
             type: 'map',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: false
+              }
+            },
             // map: 'china',
             geoIndex: 0,
             data: this.chinaAreaData
@@ -160,7 +170,7 @@ export default {
 }
 </script>
 <style scoped>
-#china-map {
+#word-map {
   width: 100%;
   height: 100%;
   /* width: 400px; */
