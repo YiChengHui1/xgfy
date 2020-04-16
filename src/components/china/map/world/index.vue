@@ -8,30 +8,20 @@ import { convertEN2CN } from '@/utils/getCountryName.js'
 import { mapGetters } from 'vuex'
 export default {
   props: {
-    chinaAreaData: Array,
-    chooseStatus: String
+    worldAreaData: Array,
+    chooseStatus: String,
+    geoIndex: Number
   },
   computed: {
     ...mapGetters(['provinceCardData', 'provinceMapData'])
   },
   methods: {
     drawChart () {
+      console.log(this.worldAreaData)
       // 基于准备好的dom，初始化echarts实例
       this.$echarts.registerMap('china', chinaJson)
       const dom = document.getElementById('word-map')
       let myChart = this.$echarts.init(dom)
-      // myChart.on('click', (params) => {
-      //   if (params.name !== '南海诸岛') {
-      //     this.$store.commit('CHANGE_PROVINCE_NAME', {provinceName: params.name})
-      //     let nameEn = convertCN2EN(params.name)
-      //     this.$store.commit('CHANGE_PROVINCE_NAME_EN', {provinceNameEn: nameEn})
-      //     let res = this.provinceCardData.filter(item => item.name === params.name)
-      //     this.$store.commit('CHANGE_SELECT_PROVINCE_CARD_DATA', {selectProvinceCardData: res[0].list})
-      //     let res2 = this.provinceMapData.filter(item => item.name === params.name)
-      //     this.$store.commit('CHANGE_SELECT_PROVINCE_MAP_DATA', {selectProvinceMapData: res2[0].list})
-      //     this.$router.push({path: 'province'})
-      //   }
-      // })
       setTimeout(function () {
         window.onresize = function () {
           myChart.resize()
@@ -150,7 +140,7 @@ export default {
             },
             // map: 'china',
             geoIndex: 0,
-            data: this.chinaAreaData
+            data: this.worldAreaData
           }
         ]
       }
@@ -163,7 +153,10 @@ export default {
     this.drawChart()
   },
   watch: {
-    chinaAreaData: function (newList, oldList) {
+    worldAreaData: function (newList, oldList) {
+      this.drawChart()
+    },
+    geoIndex: function (newNum, oldNum) {
       this.drawChart()
     }
   }

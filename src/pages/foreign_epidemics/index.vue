@@ -57,7 +57,7 @@
 import Header from '@/components/common/header'
 import { getTotalDataTwo } from '@/api/data.js'
 import WorldMap from '@/components/china/map/world'
-import { countryList2 } from '@/utils/getCountryName.js'
+import { convertCN2EN, countryList2 } from '@/utils/getCountryName.js'
 export default {
   data () {
     return {
@@ -117,7 +117,7 @@ export default {
         { status: false }
       ],
       worldNowConfirmBtnStr: '现有确诊',
-      isWorldMapShow: true, // 是否显示中国地图
+      isWorldMapShow: false, // 是否显示中国地图
       worldAreaData: [] // 中国地图数据
     }
   },
@@ -155,31 +155,30 @@ export default {
       })
     },
     // 切换地图的四个选项的具体方法
-    clearAndChangeConfirm (list, status, num) {
-      this.worldNowConfirmBtn.forEach((item, index) => {
+    clearAndChangeConfirm (status, num) {
+      this.provinceNowConfirmBtn.forEach((item, index) => {
         if (index === num) {
           item.status = true
         } else {
           item.status = false
         }
       })
-      this.worldAreaData = list
-      this.worldNowConfirmBtnStr = status
+      this.provinceNowConfirmBtnStr = status
+      this.provinceStatusIndex = num
     },
-    // 切换地图的四个选项
     changeConfirm (num) {
       switch (num) {
         case 0:
-          this.clearAndChangeConfirm(this.nowConfirmMapData, '现有确诊', num)
+          this.clearAndChangeConfirm('现有确诊', num)
           break
         case 1:
-          this.clearAndChangeConfirm(this.confirmMapData, '累计确诊', num)
+          this.clearAndChangeConfirm('累计确诊', num)
           break
         case 2:
-          this.clearAndChangeConfirm(this.deadMapData, '累计死亡', num)
+          this.clearAndChangeConfirm('累计死亡', num)
           break
         case 3:
-          this.clearAndChangeConfirm(this.healMapData, '累计治愈', num)
+          this.clearAndChangeConfirm('累计治愈', num)
           break
         default:
           break
@@ -191,8 +190,13 @@ export default {
       // console.log(res.data.data)
       if (res.status === 200) {
         let result = res.data.data
-        console.log(result.foreign.list, countryList2)
+        console.log(result.foreign.list)
         result.foreign.list.forEach(item => {
+          this.worldAreaData.push({
+            name: convertCN2EN(item.country),
+            value: [item.present, item.sure_cnt, item.die_cnt, item.cure_cnt]
+          })
+          this.isWorldMapShow = true
           // console.log(item.country, countryList2.filter(item2 => item2 === item.country))
           if (countryList2.filter(item2 => item2 === item.country).length === 0) {
             console.log(item.country)

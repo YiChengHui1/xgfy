@@ -65,7 +65,7 @@ const countryList = {
   'Guinea Bissau': '几内亚比绍',
   'Eq. Guinea': '赤道几内亚',
   'Greece': '希腊',
-  'Greenland': '格陵兰',
+  'Greenland': '格陵兰岛',
   'Guatemala': '危地马拉',
   'French Guiana': '法属圭亚那',
   'Guyana': '圭亚那',
@@ -202,15 +202,7 @@ const countryList = {
   'U.S. Virgin Is.': '维尔京群岛(美)',
   'Guinea-Bissau': '几内亚比绍'
 }
-let result = {}
-for (let key in countryList) { // key 属性名
-  let value = countryList[key]; // value 属性值
-  [value, key] = [key, value] // 交换属性名和属性值
-  result[key] = value // 设置结果
-}
-console.log(result)
-localStorage.setItem('result', JSON.stringify(result))
-export const countryList3 = {
+const countryList3 = {
   '阿富汗': 'Afghanistan',
   '新加坡': 'Singapore',
   '安哥拉': 'Angola',
@@ -277,7 +269,7 @@ export const countryList3 = {
   '几内亚比绍': 'Guinea-Bissau',
   '赤道几内亚': 'Eq. Guinea',
   '希腊': 'Greece',
-  '格陵兰': 'Greenland',
+  '格陵兰岛': 'Greenland',
   '危地马拉': 'Guatemala',
   '法属圭亚那': 'French Guiana',
   '圭亚那': 'Guyana',
@@ -478,7 +470,7 @@ export const countryList2 = [
   '几内亚比绍',
   '赤道几内亚',
   '希腊',
-  '格陵兰',
+  '格陵兰岛',
   '危地马拉',
   '法属圭亚那',
   '圭亚那',
@@ -614,7 +606,9 @@ export const countryList2 = [
   '维尔京群岛(美)',
   '几内亚比绍'
 ]
-
+export function convertCN2EN (cname) {
+  return countryList3[cname]
+}
 export function convertEN2CN (cname) {
   return countryList[cname]
 }

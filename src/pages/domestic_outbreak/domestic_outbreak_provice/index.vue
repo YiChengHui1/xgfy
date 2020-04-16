@@ -100,7 +100,7 @@ export default {
     'province-chart': ProvinceChart
   },
   methods: {
-    clearAndChangeConfirm (list, status, num) {
+    clearAndChangeConfirm (status, num) {
       this.provinceNowConfirmBtn.forEach((item, index) => {
         if (index === num) {
           item.status = true
@@ -108,23 +108,22 @@ export default {
           item.status = false
         }
       })
-      this.provinceAreaData = list
       this.provinceNowConfirmBtnStr = status
       this.provinceStatusIndex = num
     },
     changeConfirm (num) {
       switch (num) {
         case 0:
-          this.clearAndChangeConfirm(this.nowConfirmMapData, '现有确诊', num)
+          this.clearAndChangeConfirm('现有确诊', num)
           break
         case 1:
-          this.clearAndChangeConfirm(this.confirmMapData, '累计确诊', num)
+          this.clearAndChangeConfirm('累计确诊', num)
           break
         case 2:
-          this.clearAndChangeConfirm(this.deadMapData, '累计死亡', num)
+          this.clearAndChangeConfirm('累计死亡', num)
           break
         case 3:
-          this.clearAndChangeConfirm(this.healMapData, '累计治愈', num)
+          this.clearAndChangeConfirm('累计治愈', num)
           break
         default:
           break
