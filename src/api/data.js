@@ -15,3 +15,7 @@ export const getProvinceHistoryList = params => {
 export const getTotalDataTwo = params => {
   return API.GET('statistics/totalDataTwo', params)
 }
+// 获取谣言
+export const getRumorList = params => {
+  return API.GET('rumor/getRumorList', params)
+}

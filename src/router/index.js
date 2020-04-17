@@ -5,6 +5,7 @@ import DomesticOutbreakContainer from '@/pages/domestic_outbreak/domestic_outbre
 import DomesticOutbreakMain from '@/pages/domestic_outbreak/domestic_outbreak_china'
 import ForeignEpidemics from '@/pages/foreign_epidemics'
 import QueryEpidemicCommunity from '@/pages/query_epidemic_community'
+import Outbreak from '@/pages/outbreak'
 import DomesticOutbreakProvice from '@/pages/domestic_outbreak/domestic_outbreak_provice'
 
 Vue.use(Router)
@@ -35,18 +36,6 @@ export default new Router({
             }]
         }]
     },
-    // {
-    //   path: '/domestic_outbreak',
-    //   name: 'domestic_outbreak_main',
-    //   component: DomesticOutbreakMain,
-    //   children: [
-    //     {
-    //       path: '/domestic_outbreak/province',
-    //       name: 'province',
-    //       component: DomesticOutbreakProvice
-    //     }
-    //   ]
-    // },
     {
       path: '/foreign_epidemics',
       name: 'foreign_epidemics',
@@ -56,6 +45,18 @@ export default new Router({
       path: '/query_epidemic_community',
       name: 'query_epidemic_community',
       component: QueryEpidemicCommunity
+    },
+    {
+      path: '/outbreak',
+      name: 'outbreak',
+      component: Outbreak,
+      children: [
+        {
+          path: '/outbreak/detal',
+          name: 'detail',
+          component: DomesticOutbreakMain
+        }
+      ]
     }
   ]
 })

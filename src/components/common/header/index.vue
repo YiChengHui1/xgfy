@@ -37,6 +37,10 @@ export default {
         {
           path: '/query_epidemic_community',
           name: '疫情小区查询'
+        },
+        {
+          path: '/outbreak',
+          name: '疫情辟谣'
         }
       ]
     }
@@ -80,7 +84,7 @@ export default {
     }
   }
   .tab-bar-botton {
-    width: 16rem;
+    width: 26rem;
     height: 2.2rem;
     display: flex;
     justify-content: space-between;

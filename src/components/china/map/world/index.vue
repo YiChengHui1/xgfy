@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     drawChart () {
-      console.log(this.worldAreaData)
+      // console.log(this.worldAreaData)
       // 基于准备好的dom，初始化echarts实例
       this.$echarts.registerMap('china', chinaJson)
       const dom = document.getElementById('word-map')
@@ -27,6 +27,7 @@ export default {
           myChart.resize()
         }
       }, 1)
+      let that = this
       // 指定图表的配置项和数据
       let option = {
         title: {
@@ -38,11 +39,15 @@ export default {
         tooltip: {
           triggerOn: 'mousemove',
           formatter: function (e, t, n) {
-            console.log(e.name, e.seriesName, convertEN2CN(e.name))
+            // console.log(e.name, e.seriesName, e.data.value[that.geoIndex], convertEN2CN(e.name))
             convertEN2CN('China')
-            return !e.value && e.value !== 0
-              ? e.name + '：暂无数据'
-              : e.name + '<br />' + e.seriesName + '：' + e.value
+            if (e.data) {
+              if (e.data.value[that.geoIndex] || e.data.value[that.geoIndex] === 0) {
+                return convertEN2CN(e.name) + '<br />' + e.seriesName + '：' + e.data.value[that.geoIndex]
+              }
+            } else {
+              return convertEN2CN(e.name) + '：暂无数据'
+            }
           }
         },
         visualMap: {
@@ -51,41 +56,42 @@ export default {
           left: 10,
           bottom: 40,
           showLabel: false,
+          dimension: this.geoIndex,
           // text: ['高', '低'],
           pieces: [
             {
-              gte: 10000,
-              label: '10000人及以上',
+              gte: 100000,
+              label: '100000人及以上',
               color: '#de1f05'
             },
             {
-              gte: 1000,
-              lt: 10000,
-              label: '1000-9999人',
+              gte: 10000,
+              lt: 100000,
+              label: '10000-99999人',
               color: '#ff2736'
             },
             {
-              gte: 500,
-              lt: 1000,
-              label: '500-999人',
+              gte: 5000,
+              lt: 10000,
+              label: '5000-9999人',
               color: '#ff6341'
             },
             {
-              gte: 100,
-              lt: 500,
-              label: '100-499人',
+              gte: 1000,
+              lt: 5000,
+              label: '1000-4999人',
               color: '#ffa577'
             },
             {
-              gte: 10,
-              lt: 100,
-              label: '10-99 人',
+              gte: 100,
+              lt: 1000,
+              label: '100-999 人',
               color: '#ffcea0'
             },
             {
               gte: 1,
-              lt: 10,
-              label: '1-9人',
+              lt: 100,
+              label: '1-99人',
               color: ' #ffe7b2'
             },
             {

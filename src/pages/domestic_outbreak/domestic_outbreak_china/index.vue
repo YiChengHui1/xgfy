@@ -391,6 +391,12 @@ export default {
         this.$store.commit('CHANGE_LAST_UPDATE_TIME', {
           lastUpdateTime: this.lastUpdateTime
         })
+        let obj = {
+          name: 'China',
+          value: [result.chinaTotal.nowConfirm, result.chinaTotal.confirm, result.chinaTotal.dead, result.chinaTotal.heal]
+        }
+
+        this.$store.commit('CHANGE_CHINA_OBJ_INFO', {chinaTotalObj: obj})
         // 中国总体数据 上边六个卡片的数据
         this.getSixCardData(result)
         // 整理地图所需数据
@@ -555,7 +561,7 @@ export default {
       display: flex;
       .middle-content-left {
         width: 50%;
-        height: 25rem;
+        height: 24rem;
         .map-wrap {
           width: 100%;
           height: 100%;
@@ -597,7 +603,7 @@ export default {
       }
       .middle-content-right {
         width: 50%;
-        height: 25rem;
+        height: 24rem;
         .chart-wrap {
           width: 100%;
           height: 100%;

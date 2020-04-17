@@ -40,11 +40,19 @@
               v-if="isWorldMapShow"
               :worldAreaData='worldAreaData'
               :chooseStatus='worldNowConfirmBtnStr'
+              :geoIndex='worldStatusIndex'
             ></world-map>
           </div>
         </div>
         <div class="middle-content-right">
-          <div class="chart-wrap">
+          <div class="middle-content-title-setting">
+            <p class="table-title">海外疫情</p>
+            <div @click="changeTableStatus">
+              <Radio v-model="single">表格间隔显示不同颜色</Radio>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <world-table :continentsTotalData = 'continentsTotalData' :status='single'></world-table>
           </div>
         </div>
       </div>
@@ -57,12 +65,14 @@
 import Header from '@/components/common/header'
 import { getTotalDataTwo } from '@/api/data.js'
 import WorldMap from '@/components/china/map/world'
-import { convertCN2EN, countryList2 } from '@/utils/getCountryName.js'
+import { convertCN2EN } from '@/utils/getCountryName.js'
+import { mapGetters } from 'vuex'
+import WorldTable from '@/components/table'
 export default {
   data () {
     return {
       cardContent: [
-        // 首页六个卡片默认信息
+        // 世界六个卡片默认信息
         {
           title: '世界累计确诊',
           totalNum: null,
@@ -116,14 +126,21 @@ export default {
         { status: false },
         { status: false }
       ],
+      worldStatusIndex: 0,
       worldNowConfirmBtnStr: '现有确诊',
-      isWorldMapShow: false, // 是否显示中国地图
-      worldAreaData: [] // 中国地图数据
+      isWorldMapShow: false, // 是否显示世界地图
+      worldAreaData: [], // 世界地图数据
+      continentsTotalData: [], // 世界表格数据
+      single: false
     }
   },
   components: {
     'common-header': Header,
-    'world-map': WorldMap
+    'world-map': WorldMap,
+    'world-table': WorldTable
+  },
+  computed: {
+    ...mapGetters(['chinaTotalObj'])
   },
   methods: {
     // 整理首页六个卡片数据
@@ -156,15 +173,15 @@ export default {
     },
     // 切换地图的四个选项的具体方法
     clearAndChangeConfirm (status, num) {
-      this.provinceNowConfirmBtn.forEach((item, index) => {
+      this.worldNowConfirmBtn.forEach((item, index) => {
         if (index === num) {
           item.status = true
         } else {
           item.status = false
         }
       })
-      this.provinceNowConfirmBtnStr = status
-      this.provinceStatusIndex = num
+      this.worldNowConfirmBtnStr = status
+      this.worldStatusIndex = num
     },
     changeConfirm (num) {
       switch (num) {
@@ -187,30 +204,33 @@ export default {
     // 获取所有数据
     async getWorldData () {
       let res = await getTotalDataTwo()
-      // console.log(res.data.data)
       if (res.status === 200) {
         let result = res.data.data
-        console.log(result.foreign.list)
-        result.foreign.list.forEach(item => {
-          this.worldAreaData.push({
-            name: convertCN2EN(item.country),
-            value: [item.present, item.sure_cnt, item.die_cnt, item.cure_cnt]
+        if (result.foreign.list && result.foreign.list.length !== 0) {
+          this.worldAreaData.push(this.chinaTotalObj)
+          result.foreign.list.forEach(item => {
+            if (item.country === '也门') {
+              item.continent = '亚洲'
+            }
+            this.worldAreaData.push({
+              name: convertCN2EN(item.country),
+              value: [item.present, item.sure_cnt, item.die_cnt, item.cure_cnt]
+            })
+
+            // console.log(item.country, countryList2.filter(item2 => item2 === item.country))
+            // if (countryList2.filter(item2 => item2 === item.country).length === 0) {
+            //   console.log(item.country)
+            // }
           })
           this.isWorldMapShow = true
-          // console.log(item.country, countryList2.filter(item2 => item2 === item.country))
-          if (countryList2.filter(item2 => item2 === item.country).length === 0) {
-            console.log(item.country)
-          }
-          // countryList2.filter(item2=>item2===item.country)
-          // countryList2.forEach(item2 => {
-          //   if (item2 !== item.country) {
-          //     console.log(item.country)
-          //   }
-          // })
-        })
-        // countryList2
+        }
         this.getSixCardData(result)
+        this.continentsTotalData = result.foreign.list
       }
+    },
+    // 更改表格的显示
+    changeTableStatus () {
+      this.single = !this.single
     }
   },
   created () {
@@ -331,7 +351,7 @@ export default {
       display: flex;
       .middle-content-left {
         width: 50%;
-        height: 25rem;
+        height: 24rem;
         .map-wrap {
           width: 100%;
           height: 100%;
@@ -373,10 +393,19 @@ export default {
       }
       .middle-content-right {
         width: 50%;
-        height: 25rem;
-        .chart-wrap {
+        height: 24rem;
+        .middle-content-title-setting{
+          display: flex;
+          .table-title{
+            color: #6fa8dc;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-right: 3rem;
+          }
+        }
+        .table-wrap {
           width: 100%;
-          height: 100%;
+          height: 21.5rem;
         }
       }
     }

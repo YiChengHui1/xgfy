@@ -1,4 +1,5 @@
 const state = {
+  chinaTotalObj: {}, // 中国的总体信息
   provinceName: '', // 首页选择的省份名称汉字
   provinceNameEn: '', // 首页选择的省份名称拼音
   noDataProvince: [], // 首页不能选择的省份名称
@@ -9,6 +10,10 @@ const state = {
   lastUpdateTime: '' // 最近更新时间
 }
 const getters = {
+  chinaTotalObj (state) {
+    state.chinaTotalObj = JSON.parse(localStorage.getItem('chinaTotalObj'))
+    return state.chinaTotalObj
+  },
   provinceName (state) {
     state.provinceName = localStorage.getItem('provinceName')
     return state.provinceName
@@ -44,6 +49,11 @@ const getters = {
 
 }
 const mutations = {
+  // 更新中国的信息
+  CHANGE_CHINA_OBJ_INFO (state, { chinaTotalObj = {} }) {
+    state.chinaTotalObj = chinaTotalObj
+    localStorage.setItem('chinaTotalObj', JSON.stringify(chinaTotalObj))
+  },
   // 更新点击省份的名称
   CHANGE_PROVINCE_NAME (state, { provinceName = '' }) {
     state.provinceName = provinceName
