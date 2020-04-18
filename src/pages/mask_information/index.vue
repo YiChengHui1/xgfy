@@ -1,5 +1,5 @@
 <template>
-  <div class="outbreak-list">
+  <div class="mask_information">
     <Layout>
       <common-header></common-header>
       <router-view />
@@ -24,7 +24,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.outbreak-list {
+.mask_information {
   width: 100%;
 }
 </style>

@@ -39,8 +39,12 @@ export default {
           name: '疫情小区查询'
         },
         {
-          path: '/outbreak',
+          path: '/rumor',
           name: '疫情辟谣'
+        },
+        {
+          path: '/mask',
+          name: '口罩信息'
         }
       ]
     }

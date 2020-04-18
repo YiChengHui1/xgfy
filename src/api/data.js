@@ -19,3 +19,11 @@ export const getTotalDataTwo = params => {
 export const getRumorList = params => {
   return API.GET('rumor/getRumorList', params)
 }
+// 根据谣言id获取谣言详情
+export const getRumorDetail = params => {
+  return API.GET('rumor/getRumorDetail', params)
+}
+// 获取口罩信息
+export const getGauzeMask = params => {
+  return API.GET('mask/gauzeMask', params)
+}

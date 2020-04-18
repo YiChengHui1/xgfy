@@ -7,7 +7,8 @@ const state = {
   provinceCardData: [], // 各个省份的卡片数据
   selectProvinceMapData: [], // 选中省份的地图疫情数据
   selectProvinceCardData: [], // 选中省份的卡片数据
-  lastUpdateTime: '' // 最近更新时间
+  lastUpdateTime: '', // 最近更新时间
+  chooseRumorId: '' // 选择的谣言id
 }
 const getters = {
   chinaTotalObj (state) {
@@ -45,6 +46,10 @@ const getters = {
   lastUpdateTime (state) {
     state.lastUpdateTime = localStorage.getItem('lastUpdateTime')
     return state.lastUpdateTime
+  },
+  chooseRumorId (state) {
+    state.chooseRumorId = localStorage.getItem('chooseRumorId')
+    return state.chooseRumorId
   }
 
 }
@@ -90,9 +95,14 @@ const mutations = {
     localStorage.setItem('selectProvinceCardData', JSON.stringify(selectProvinceCardData))
   },
   // 更换最近更新时间
-  CHANGE_LAST_UPDATE_TIME (state, { lastUpdateTime = [] }) {
+  CHANGE_LAST_UPDATE_TIME (state, { lastUpdateTime = '' }) {
     state.lastUpdateTime = lastUpdateTime
     localStorage.setItem('lastUpdateTime', lastUpdateTime)
+  },
+  // 更新谣言id
+  CHANGE_CHOOSE_RUMOR_ID (state, { chooseRumorId = '' }) {
+    state.chooseRumorId = chooseRumorId
+    localStorage.setItem('chooseRumorId', chooseRumorId)
   }
 
 }
