@@ -27,3 +27,11 @@ export const getRumorDetail = params => {
 export const getGauzeMask = params => {
   return API.GET('mask/gauzeMask', params)
 }
+// 获取所有同乘车辆数据
+export const getSameRideAll = params => {
+  return API.GET('sameRide/getSameRideAll', params)
+}
+// 根据日期和车号查询
+export const getSameRide1 = params => {
+  return API.GET('sameRide/getSameRide1', params)
+}

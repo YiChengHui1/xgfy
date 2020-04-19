@@ -10,6 +10,8 @@ import RumorList from '@/pages/outbreak/outbreak_list'
 import RumorDetail from '@/pages/outbreak/outbreak_detail'
 import DomesticOutbreakProvice from '@/pages/domestic_outbreak/domestic_outbreak_provice'
 import MaskInfo from '@/pages/mask_information'
+import MaskMain from '@/pages/mask_information/mask_main'
+import CityVehicles from '@/pages/city_vehicles'
 Vue.use(Router)
 
 export default new Router({
@@ -71,10 +73,24 @@ export default new Router({
           component: RumorDetail
         }
       ]
-    }, {
+    },
+    {
       path: '/mask',
       name: 'mask',
-      component: MaskInfo
+      component: MaskInfo,
+      redirect: '/mask/info',
+      children: [
+        {
+          path: '/mask/info',
+          name: 'info',
+          component: MaskMain
+        }
+      ]
+    },
+    {
+      path: '/cityvehicles',
+      name: 'cityvehicles',
+      component: CityVehicles
     }
   ]
 })

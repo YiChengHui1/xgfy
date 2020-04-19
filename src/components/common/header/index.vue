@@ -45,6 +45,10 @@ export default {
         {
           path: '/mask',
           name: '口罩信息'
+        },
+        {
+          path: '/cityvehicles',
+          name: '同乘车辆'
         }
       ]
     }
@@ -88,7 +92,7 @@ export default {
     }
   }
   .tab-bar-botton {
-    width: 26rem;
+    width: 30rem;
     height: 2.2rem;
     display: flex;
     justify-content: space-between;

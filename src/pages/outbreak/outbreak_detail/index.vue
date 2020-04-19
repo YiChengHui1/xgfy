@@ -236,6 +236,11 @@ export default {
         display: flex;
         justify-content: flex-end;
         cursor: pointer;
+        span{
+          a{
+            color: rgb(81, 90, 110);
+          }
+        }
       }
     }
   }
