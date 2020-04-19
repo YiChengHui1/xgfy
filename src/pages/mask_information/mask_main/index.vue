@@ -1,38 +1,68 @@
 <template>
   <div class="mask_main">
     <Content class="content">
-      <Card class="card">
+      <Card
+        class="card"
+        v-if="maskInfo!=[]"
+      >
         <div class="top-content">
-          <div
-          v-if="province.length!==0"
-          :class="['province-name',{' current-choose':province.isLoc}]"
-            v-for="province in maskInfo"
-            :key="province.value"
-            @click="changeProvince(province)"
-          >{{
-          province.province}}</div>
+          <div class="top-content-left">
+            省份
+          </div>
+          <div class="top-content-right">
+            <span
+              v-for="provinceInfo in maskInfo"
+              :key="provinceInfo.value"
+              :class="['province-name',{' current-choose':provinceInfo.isLoc}]"
+              @click="changeProvince(provinceInfo)"
+            >{{provinceInfo.province}}</span>
+          </div>
         </div>
         <div class="middle-content">
-          <p>{{`省份：${currentProvince.province}`}}</p>
-          <div
-          class="city-info"
-            v-for="(city,index) in currentProvince.list"
-            :key="index"
-          >
-            <p>{{`城市：${city.city}`}}</p>
-            <p v-if="city.url!==''"><a :href="city.url">{{`点击进入${city.city}口罩预约购买指南`}}</a></p>
+          <p>开放预约购买城市及地区</p>
+          <div class="main-content">
             <div
-            class="district-info"
-              v-if="city.list!==[]"
-              v-for="district in city.list"
-              :key="district.value"
+              class="city-info"
+              v-for="(city,index) in currentProvince.list"
+              :key="index"
             >
-              <p>{{`地区：${district.district}`}}</p>
-              <p v-if="district.url!==''"><a :href="district.url">{{`点击进入${district.district}口罩预约购买指南`}}</a></p>
+              <div class="item1">
+                <img
+                  class="city-img"
+                  src="@/assets/imgs/fangzi.png"
+                  alt=""
+                >
+                <span class="city-name">{{city.city}}</span>
+                <span
+                  class="mask-url"
+                  v-if="city.url!==''"
+                ><a
+                    class="a-mask"
+                    :href="city.url"
+                  >{{`点击进入${city.city}口罩预约购买指南`}}</a></span>
+              </div>
+              <div
+                class="item2"
+                v-if="city.list!==[]"
+              >
+                <div
+                  class="district-info"
+                  v-for="district in city.list"
+                  :key="district.value"
+                >
+                  <span class="city-name2">{{district.district}}</span>
+                  <span
+                    class="city-url"
+                    v-if="district.url!==''"
+                  ><a :href="district.url">{{`点击进入${district.district}口罩预约购买指南`}}</a></span>
+                  <span
+                    v-else
+                    class="city-url"
+                  >暂无相关指南</span>
+                </div>
+              </div>
             </div>
           </div>
-
-          <!-- <p>{{`城市：${currentProvince.list[0].city}`}}</p> -->
         </div>
       </Card>
     </Content>
@@ -94,52 +124,113 @@ export default {
     justify-content: center;
     .card {
       width: 90vw;
-      height: 30rem;
+      height: 32rem;
+      color: #000;
       .top-content {
         width: 100%;
         display: flex;
-        flex-wrap: wrap;
-        .province-name {
-          padding: 0.5rem 1rem;
-          border-radius: 0.3rem;
-          margin-right: 1rem;
-          margin-bottom: 0.5rem;
-          cursor: pointer;
-          background-color: #fff;
-          border: 1px solid skyblue;
-          color: #000;
+        font-size: 0.95rem;
+        // color: #000;
+        .top-content-left {
+          width: 5%;
         }
-        .current-choose {
-          background-color: skyblue;
-          color: #fff;
-          border: 1px solid #fff;
-        }
-        .province-name:active {
-          transform: translateY(1px);
+        .top-content-right {
+          width: 95%;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid #d6d6d6;
+          .province-name {
+            display: inline-block;
+            margin-right: 1.5rem;
+            cursor: pointer;
+          }
+          .current-choose {
+            color: #ff8b3d;
+          }
         }
       }
-      .middle-content{
+      .middle-content {
         width: 100%;
-        height: 22rem;
-        overflow-y: auto;
-        .city-info{
+        margin: 0.5rem 0 0 0;
+        font-size: 0.9rem;
+        .main-content {
           width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          p:nth-child(1){
-            margin: 0 1rem 0 0.5rem;
-          }
-          .district-info{
+          height: 24rem;
+          overflow-y: auto;
+          .city-info {
             width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            p:nth-child(1){
-              margin: 0 1rem 0 1rem;
+            padding: 0 1rem;
+            .item1 {
+              margin: 0.5rem 0;
+              .city-img {
+                display: inline-block;
+                width: 1rem;
+                height: 1rem;
+                // vertical-align: bottom;
+                margin: -4px 0.5rem 0 0;
+              }
+              .city-name {
+                font-size: 1rem;
+                color: #ff8b3d;
+              }
+              .mask-url {
+                display: inline-block;
+                margin: 0 0 0.2rem 0.5rem;
+                border-bottom: 1px solid #b9e5f7;
+                .a-mask {
+                  color: #000;
+                }
+              }
             }
-
+            .item2 {
+              width: 100%;
+              display: flex;
+              flex-wrap: wrap;
+              .district-info {
+                margin: 0 0.8rem 0.5rem 0.8rem;
+                .city-name2 {
+                  display: inline-block;
+                  box-sizing: border-box;
+                  width: 7rem;
+                  text-align: center;
+                  // font-size: 0.12rem;
+                  // padding: 1px 1px 1px 1px;
+                  border-radius: 0.5rem 0 0 0.5rem;
+                  font-size: 0.9rem;
+                  line-height: 3rem;
+                  height: 3rem;
+                  vertical-align: middle;
+                  font-weight: normal;
+                  transform: scale(0.9, 0.8);
+                  border: 0.01rem solid #b9e5f7;
+                  border-right: 0;
+                  background-color: #b9e5f7;
+                  white-space: nowrap;
+                }
+                .city-url {
+                  font-size: 0.7rem;
+                  display: inline-block;
+                  box-sizing: border-box;
+                  width: 15rem;
+                  text-align: center;
+                  padding: 1px 1px 1px 1px;
+                  border-radius: 0 0.5rem 0.5rem 0;
+                  line-height: 2.4rem;
+                  height: 2.4rem;
+                  vertical-align: middle;
+                  background-color: #fff;
+                  color: #4d4d4d;
+                  border: 0.1rem solid #b9e5f7;
+                  border-left: 0;
+                  white-space: nowrap;
+                  transform: translateX(-0.7rem);
+                  a {
+                    color: #4d4d4d;
+                  }
+                }
+              }
+            }
           }
         }
-
       }
     }
   }
