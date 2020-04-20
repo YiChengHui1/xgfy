@@ -5,6 +5,7 @@ import DomesticOutbreakContainer from '@/pages/domestic_outbreak/domestic_outbre
 import DomesticOutbreakMain from '@/pages/domestic_outbreak/domestic_outbreak_china'
 import ForeignEpidemics from '@/pages/foreign_epidemics'
 import QueryEpidemicCommunity from '@/pages/query_epidemic_community'
+import QueryEpidemicCommunityMain from '@/pages/query_epidemic_community/query_epidemic_community_main'
 import Rumor from '@/pages/outbreak'
 import RumorList from '@/pages/outbreak/outbreak_list'
 import RumorDetail from '@/pages/outbreak/outbreak_detail'
@@ -51,7 +52,13 @@ export default new Router({
       // 疫情小区查询
       path: '/query_epidemic_community',
       name: 'query_epidemic_community',
-      component: QueryEpidemicCommunity
+      component: QueryEpidemicCommunity,
+      redirect: '/query_epidemic_community/baidu_map',
+      children: [{
+        path: '/query_epidemic_community/baidu_map',
+        name: 'baidu_map',
+        component: QueryEpidemicCommunityMain
+      }]
     },
     {
       // 谣言

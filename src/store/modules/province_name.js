@@ -8,7 +8,8 @@ const state = {
   selectProvinceMapData: [], // 选中省份的地图疫情数据
   selectProvinceCardData: [], // 选中省份的卡片数据
   lastUpdateTime: '', // 最近更新时间
-  chooseRumorId: '' // 选择的谣言id
+  chooseRumorId: '', // 选择的谣言id
+  mapProvinceCityInfo: {} // 百度地图的省份和城市信息
 }
 const getters = {
   chinaTotalObj (state) {
@@ -50,6 +51,10 @@ const getters = {
   chooseRumorId (state) {
     state.chooseRumorId = localStorage.getItem('chooseRumorId')
     return state.chooseRumorId
+  },
+  mapProvinceCityInfo (state) {
+    state.mapProvinceCityInfo = JSON.parse(localStorage.getItem('mapProvinceCityInfo'))
+    return state.mapProvinceCityInfo
   }
 
 }
@@ -103,8 +108,12 @@ const mutations = {
   CHANGE_CHOOSE_RUMOR_ID (state, { chooseRumorId = '' }) {
     state.chooseRumorId = chooseRumorId
     localStorage.setItem('chooseRumorId', chooseRumorId)
+  },
+  // 更换省份和城市信息
+  CHANGE_PROVINCE_CITY_MAP (state, { mapProvinceCityInfo = {} }) {
+    state.mapProvinceCityInfo = mapProvinceCityInfo
+    localStorage.setItem('mapProvinceCityInfo', JSON.stringify(mapProvinceCityInfo))
   }
-
 }
 const moduleProvince = {
   state,

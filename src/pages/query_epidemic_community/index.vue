@@ -1,11 +1,9 @@
 <template>
   <div class="query_epidemic_community">
     <Layout>
-        <common-header></common-header>
-        <Content>Content</Content>
-        <Footer>Footer</Footer>
+      <common-header></common-header>
+      <router-view />
     </Layout>
-    <h2>测试上传服务器</h2>
   </div>
 </template>
 
@@ -25,8 +23,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.query_epidemic_community{
+.query_epidemic_community {
   width: 100%;
-
 }
 </style>
