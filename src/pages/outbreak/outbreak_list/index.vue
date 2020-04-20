@@ -86,7 +86,9 @@ export default {
       let params = { page: this.pageId - 1 }
       let res = await getRumorList(params)
       if (res.status === 200) {
-        res.data.data.splice(0, 1)
+        if (res.data.data.length === 10) {
+          res.data.data.splice(0, 1)
+        }
         this.rumorList = res.data.data
         console.log(this.rumorList)
       }
