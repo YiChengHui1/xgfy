@@ -35,7 +35,11 @@ export const getSameRideAll = params => {
 export const getSameRide1 = params => {
   return API.GET('sameRide/getSameRide1', params)
 }
-// 根据城市名获取小区疫情数据
+// 根据城市名获取小区疫情数据1
 export const getVillage1 = params => {
   return API.GET('village/getVillage1', params)
+}
+// 根据城市名获取小区疫情数据2
+export const getVillage2 = params => {
+  return API.GET('village/getVillage2', params)
 }

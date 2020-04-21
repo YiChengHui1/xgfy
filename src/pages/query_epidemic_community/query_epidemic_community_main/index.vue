@@ -8,10 +8,11 @@
 
 <script>
 import baidu from '@/components/baidu'
-import axios from 'axios'
+// import axios from 'axios'
 import {mapGetters} from 'vuex'
 // eslint-disable-next-line standard/object-curly-even-spacing
-import { provinceAndCityDataPlus, CodeToText } from 'element-china-area-data'
+import { provinceAndCityDataPlus } from 'element-china-area-data'
+import { getVillage2 } from '@/api/data.js'
 export default {
   components: { baidu },
   data () {
@@ -25,41 +26,46 @@ export default {
     ...mapGetters(['mapProvinceCityInfo'])
   },
   methods: {
-    handleChange (value) {
-      if (value[1] === '') {
-        let addr = ''
-        addr = CodeToText[value[0]]
-        let param = { province: addr }
-        this.getData(param)
-      } else {
-        let param = {
-          province: CodeToText[value[0]],
-          city: CodeToText[value[1]]
-        }
-
-        this.getData(param)
+    async getVillage1Fun (params) {
+      let res = await getVillage2(params)
+      if (res.status === 200) {
+        let temp = res.data.data
+        let dataArr = []
+        temp.forEach((item, index) => {
+          if (item.district_name === '上街区中') {
+            item.district_name = '上街区'
+          }
+          let obj = {
+            country: '中国',
+            id: index,
+            province: item.province_name,
+            city: item.city_name,
+            detail: item.posi_address,
+            county: item.district_name,
+            position: item.point.reverse(),
+            updateTime: item.update_time,
+            show: false
+          }
+          dataArr.push(obj)
+        })
+        this.data = dataArr
       }
     },
-    getData (p) {
-      axios
-        .get('https://lab.ahusmart.com/nCoV/api/detail', {
-          params: p
-        })
-        .then(response => {
-          this.data = response.data.results
-          // console.log(response)
-        })
+    init () {
+      document.title = '全国新冠病例小区分布'
+      let params = {
+        cityName: '北京市'
+      }
+      this.getVillage1Fun(params)
     }
+
   },
   created () {
-    document.title = '全国新冠病例小区分布'
-    let p = { province: '北京市', city: '北京市' }
-    this.getData(p)
+    this.init()
   },
   watch: {
     mapProvinceCityInfo: function (newValue, oldValue) {
-      // console.log(newValue)
-      this.getData(newValue)
+      this.getVillage1Fun(newValue)
     }
   }
 }

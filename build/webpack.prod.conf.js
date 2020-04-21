@@ -19,7 +19,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
-      extract: true,
+      extract: false, // 解决iview打包图标不显示问题
       usePostCSS: true
     })
   },

@@ -26,11 +26,11 @@
         :autoLocation="true"
       ></bm-geolocation>
       <bm-marker
-        v-bind:items="items"
+        :items="items"
         v-for="(item, index) in items"
-        v-bind:item="item"
-        v-bind:index="index"
-        v-bind:key="item.id"
+        :item="item"
+        :index="index"
+        :key="item.id"
         :position="{'lng':item.position[0],'lat':item.position[1]}"
         :dragging="false"
         :icon="{url: require('../../assets/imgs/poi_marker_red.png'), size: {width: 20, height: 20},imageSize:{width: 20, height: 20}}"
@@ -55,22 +55,10 @@
             effect="dark"
           >{{item.county}}</el-tag>
 
-          <h5>{{item.detail}}</h5>
-
-          <div>来源自:<el-link
-              :href="item.sourceUrl"
-              target="_blank"
-              type="primary"
-            >{{item.infoSource}}</el-link>
-          </div>
-          <p>发布时间:{{getExactTime(item.updateTime)}}</p>
+          <p class="detail">{{`详细地址:${item.detail}`}}</p>
+          <p>发布时间:{{item.updateTime}}</p>
         </bm-info-window>
       </bm-marker>
-      <bm-city-list
-        class="bm-city-list"
-        anchor="BMAP_ANCHOR_TOP_LEFT"
-        :offset="{width:30,height:90}"
-      ></bm-city-list>
     </baidu-map>
     <div class="search-content">
       <img
@@ -114,27 +102,12 @@ export default {
     infoWindowOpen (index) {
       this.items[index].show = true
     },
-    getExactTime (time) {
-      var date = new Date(time * 1000)
-      // window.console.log(time)
-      var year = date.getFullYear() + '-'
-      var month =
-        (date.getMonth() + 1 < 10
-          ? '0' + (date.getMonth() + 1)
-          : date.getMonth() + 1) + '-'
-      var dates =
-        date.getDate() + 1 < 10 ? '0' + date.getDate() : date.getDate()
-      // var hour = date.getHours() + ':';
-      // var min = date.getMinutes() + ':';
-      // var second = date.getSeconds();
-      return year + month + dates
-    },
     // 标注气泡内容创建后的回调函数
     infohtmlset (poi) {
       this.panelShow = false
       let params = {
-        province: poi.province,
-        city: poi.city
+        // province: poi.province,
+        cityName: poi.city
       }
       this.$store.commit('CHANGE_PROVINCE_CITY_MAP', {
         mapProvinceCityInfo: params
@@ -145,8 +118,8 @@ export default {
       var geolocation = new BMap.Geolocation()
       geolocation.getCurrentPosition(function (r) {
         let param = {
-          province: r.address.province,
-          city: r.address.city
+          // province: r.address.province,
+          cityName: r.address.city
         }
         _this.$store.commit('CHANGE_PROVINCE_CITY_MAP', {
           mapProvinceCityInfo: param
@@ -227,6 +200,10 @@ export default {
   }
   .el-tag {
     margin-left: 5px;
+  }
+  .detail{
+    height: 2rem;
+    line-height: 2rem;
   }
 }
 </style>

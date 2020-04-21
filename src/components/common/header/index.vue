@@ -12,16 +12,24 @@
       <p>安阳工学院</p>
     </div>
     <div class="tab-bar-botton">
-      <div class="tab-bar-content" v-for="content in tabContent" :key="content.value">
+      <div
+        class="tab-bar-content"
+        v-for="content in tabContent"
+        :key="content.value"
+      >
         <router-link :to="{path:content.path}">
           <div class="content-name">{{content.name}}</div>
         </router-link>
+      </div>
+      <div class="tab-bar-content2">
+        <button :class="['about-us',{'about-us-active':isAboutUsActive}]" @click="openModal">关于我们</button>
       </div>
     </div>
   </Header>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -50,7 +58,25 @@ export default {
           path: '/cityvehicles',
           name: '同乘车辆'
         }
-      ]
+      ],
+      isAboutUsActive: false
+    }
+  },
+  computed: {
+    ...mapGetters(['isModalShow'])
+  },
+  methods: {
+    openModal () {
+      this.isAboutUsActive = true
+      this.$store.commit('CHANGE_IS_MODAL_SHOW_INFO', {isModalShow: this.isAboutUsActive})
+    }
+  },
+  created () {
+    this.isAboutUsActive = this.isModalShow
+  },
+  watch: {
+    isModalShow: function (newValue, oldValue) {
+      this.isAboutUsActive = newValue
     }
   }
 }
@@ -92,10 +118,11 @@ export default {
     }
   }
   .tab-bar-botton {
-    width: 30rem;
+    width: 40rem;
     height: 2.2rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     .tab-bar-content {
       .content-name {
         line-height: 2.2rem;
@@ -112,6 +139,21 @@ export default {
     .tab-bar-content:hover {
       .content-name {
         color: rgba(255, 255, 255, 1);
+      }
+    }
+    .tab-bar-content2 {
+      .about-us {
+        border: none;
+        background-color: transparent;
+        outline: none;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.5);
+        &:hover {
+          color: #fff;
+        }
+      }
+      .about-us-active {
+        color: #fff;
       }
     }
   }

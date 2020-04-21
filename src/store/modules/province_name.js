@@ -10,7 +10,8 @@ const state = {
   lastUpdateTime: '', // 最近更新时间
   chooseRumorId: '', // 选择的谣言id
   mapProvinceCityInfo: {}, // 百度地图的省份和城市信息
-  mapCenterData: {} // 地图中心点位置
+  mapCenterData: {}, // 地图中心点位置
+  isModalShow: false // 联系我们弹窗是否显示
 }
 const getters = {
   chinaTotalObj (state) {
@@ -60,6 +61,10 @@ const getters = {
   mapCenterData (state) {
     state.mapCenterData = JSON.parse(localStorage.getItem('mapCenterData'))
     return state.mapCenterData
+  },
+  isModalShow (state) {
+    state.isModalShow = JSON.parse(sessionStorage.getItem('isModalShow'))
+    return state.isModalShow
   }
 }
 const mutations = {
@@ -122,6 +127,11 @@ const mutations = {
   CHANGE_MAP_CENTER_DATA (state, { mapCenterData = {} }) {
     state.mapCenterData = mapCenterData
     localStorage.setItem('mapCenterData', JSON.stringify(mapCenterData))
+  },
+  // 更新是否显示联系我们弹窗的信息
+  CHANGE_IS_MODAL_SHOW_INFO (state, { isModalShow = false }) {
+    state.isModalShow = isModalShow
+    sessionStorage.setItem('isModalShow', JSON.stringify(isModalShow))
   }
 }
 const moduleProvince = {
