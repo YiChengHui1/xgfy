@@ -55,7 +55,7 @@
               查询结果：
               <div
                 class="result"
-                v-if="isShowResult"
+                v-if="isShowInfoResult"
               >
                 <div
                   class="have-data"
@@ -67,13 +67,13 @@
                   <p>{{`日期：${checkResult.date}`}}</p>
                   <p><a :href="checkResult.source">点击查看详细信息</a></p>
                 </div>
-                <div
-                  v-else
-                  class="no-data"
-                >
-                  <div>
-                    无疫情记录
-                  </div>
+              </div>
+              <div
+                v-if="isShowNoDataResult"
+                class="no-data"
+              >
+                <div>
+                  无疫情记录
                 </div>
               </div>
             </div>
@@ -146,7 +146,8 @@ export default {
         ]
       },
       checkResult: {}, // 查询结果
-      isShowResult: false, // 是否显示结果
+      isShowNoDataResult: false, // 是否显示没有疫情结果
+      isShowInfoResult: false, // 是否显示疫情信息结果
       isHaveData: false, // 是否有疫情信息
       allTrainInfo: {}, // 所有车辆疫情信息
       pageId: 1, // 当前页码
@@ -207,8 +208,12 @@ export default {
         if (res.data.data.total === 1) {
           this.checkResult = res.data.data.list[0]
           this.isHaveData = true
+          this.isShowInfoResult = true
+          this.isShowNoDataResult = false
+        } else if (res.data.data.total === 0) {
+          this.isShowNoDataResult = true
+          this.isShowInfoResult = false
         }
-        this.isShowResult = true
       }
       // console.log(res)
     },
@@ -217,7 +222,6 @@ export default {
       if (res.status === 200) {
         this.allTrainInfo = res.data.data.list
         this.paging(this.pageSize, this.pageId)
-        console.log(this.allTrainInfo)
       }
     },
     changePageNum (pageNum) {
@@ -230,7 +234,7 @@ export default {
       // console.log(pagesize, current)
       this.allTrainInfo.forEach((item, index) => {
         if (item.type !== 1 && item.type !== 2) {
-          console.log(item, item.type, 1, 2)
+          // console.log(item, item.type, 1, 2)
         }
         if (
           pagesize * (current - 1) <= index &&
@@ -240,7 +244,6 @@ export default {
         }
       })
       this.trainInfoPageData = tablePush
-      console.log(tablePush, 111)
       // return tablePush
     },
     handleSubmit (name) {

@@ -53,7 +53,7 @@ export default {
   },
   created () {
     document.title = '全国新冠病例小区分布'
-    let p = { province: '安徽省', city: '合肥市' }
+    let p = { province: '北京市', city: '北京市' }
     this.getData(p)
   },
   watch: {

@@ -110,7 +110,7 @@ export default {
             max: 5
           },
           // zoom: 1.23,
-          top: 50,
+          top: 70,
           label: {
             normal: {
               show: false,

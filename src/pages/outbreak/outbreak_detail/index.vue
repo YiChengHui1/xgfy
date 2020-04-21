@@ -87,7 +87,7 @@ export default {
       // console.log(res)
       if (res.status === 200) {
         this.rumor = res.data.data
-        console.log(this.rumor)
+        // console.log(this.rumor)
       }
     }
   },

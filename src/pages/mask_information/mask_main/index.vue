@@ -101,7 +101,7 @@ export default {
             this.currentProvince = item
           }
         })
-        console.log(res.data.data, this.currentProvince)
+        // console.log(res.data.data, this.currentProvince)
       }
       // console.log(res)
     }

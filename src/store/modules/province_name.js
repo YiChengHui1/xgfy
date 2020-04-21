@@ -9,7 +9,8 @@ const state = {
   selectProvinceCardData: [], // 选中省份的卡片数据
   lastUpdateTime: '', // 最近更新时间
   chooseRumorId: '', // 选择的谣言id
-  mapProvinceCityInfo: {} // 百度地图的省份和城市信息
+  mapProvinceCityInfo: {}, // 百度地图的省份和城市信息
+  mapCenterData: {} // 地图中心点位置
 }
 const getters = {
   chinaTotalObj (state) {
@@ -55,8 +56,11 @@ const getters = {
   mapProvinceCityInfo (state) {
     state.mapProvinceCityInfo = JSON.parse(localStorage.getItem('mapProvinceCityInfo'))
     return state.mapProvinceCityInfo
+  },
+  mapCenterData (state) {
+    state.mapCenterData = JSON.parse(localStorage.getItem('mapCenterData'))
+    return state.mapCenterData
   }
-
 }
 const mutations = {
   // 更新中国的信息
@@ -113,6 +117,11 @@ const mutations = {
   CHANGE_PROVINCE_CITY_MAP (state, { mapProvinceCityInfo = {} }) {
     state.mapProvinceCityInfo = mapProvinceCityInfo
     localStorage.setItem('mapProvinceCityInfo', JSON.stringify(mapProvinceCityInfo))
+  },
+  // 更换地图中心点位置
+  CHANGE_MAP_CENTER_DATA (state, { mapCenterData = {} }) {
+    state.mapCenterData = mapCenterData
+    localStorage.setItem('mapCenterData', JSON.stringify(mapCenterData))
   }
 }
 const moduleProvince = {
