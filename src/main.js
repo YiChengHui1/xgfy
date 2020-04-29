@@ -25,6 +25,11 @@ Vue.prototype.$Message = Message
 Vue.prototype.$Spin = Spin
 Vue.prototype._ = _
 
+Vue.prototype.$Notice.config({
+  top: 70,
+  duration: 10
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

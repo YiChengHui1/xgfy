@@ -86,6 +86,8 @@ export default {
   data () {
     return {
       // items: this.data,
+      BMaps: null,
+      maps: null,
       center: { lng: 116.404, lat: 39.915 },
       zoom: 11,
       location: '',
@@ -109,42 +111,59 @@ export default {
         // province: poi.province,
         cityName: poi.city
       }
+      let distanceArray = []
       this.$store.commit('CHANGE_PROVINCE_CITY_MAP', {
         mapProvinceCityInfo: params
       })
-    },
-    handler ({BMap, map}) {
-      let _this = this // 设置一个临时变量指向vue实例，因为在百度地图回调里使用this，指向的不是vue实例；
-      var geolocation = new BMap.Geolocation()
-      geolocation.getCurrentPosition(function (r) {
-        let param = {
-          // province: r.address.province,
-          cityName: r.address.city
-        }
-        _this.$store.commit('CHANGE_PROVINCE_CITY_MAP', {
-          mapProvinceCityInfo: param
+      this.items.forEach(item => {
+        let num = this.maps
+          .getDistance(poi.point, {
+            lng: item.position[0],
+            lat: item.position[1]
+          })
+          .toFixed(2)
+        distanceArray.push({
+          name: item.detail,
+          value: parseInt(num)
         })
-        _this.center = {lng: r.longitude, lat: r.latitude} // 设置center属性值
-        _this.autoLocationPoint = {lng: r.longitude, lat: r.latitude} // 自定义覆盖物
-        _this.initLocation = true
-        // _this.$store.commit('CHANGE_MAP_CENTER_DATA', {mapCenterData: _this.center})
-        // console.log('center:', _this.center) // 如果这里直接使用this是不行的
-      }, {enableHighAccuracy: true})
-
-      // 下面注释是百度地图API官方实现方法，因为我使用自定义图标覆盖物，所以没有使用这种方法！
-      // 如使用以下这种方法，那么我Template里所写的自定义定位图标代码是不需要的
-      // var geolocation = new BMap.Geolocation();
-      // geolocation.getCurrentPosition(function(r){
-      // if(this.getStatus() == BMAP_STATUS_SUCCESS){
-      //   var mk = new BMap.Marker(r.point);
-      //   map.addOverlay(mk);
-      //   map.panTo(r.point);
-      //   alert('您的位置：'+r.point.lng+','+r.point.lat);
-      // }
-      // else {
-      //   alert('failed'+this.getStatus());
-      // }
-      // },{enableHighAccuracy: true})
+      })
+      if (distanceArray.length > 0) {
+        distanceArray.sort((el1, el2) => {
+          return el1.value - el2.value
+        })
+        let str = distanceArray[0].name + '：距你' + distanceArray[0].value + '米'
+        this.$Notice.open({
+          title: '距离最近疫情',
+          // eslint-disable-next-line no-constant-condition
+          desc: false
+            ? ''
+            : str,
+          duration: 10
+        })
+      }
+    },
+    handler ({ BMap, map }) {
+      let _this = this // 设置一个临时变量指向vue实例，因为在百度地图回调里使用this，指向的不是vue实例；
+      this.BMaps = BMap
+      this.maps = map
+      var geolocation = new BMap.Geolocation()
+      geolocation.getCurrentPosition(
+        function (r) {
+          let param = {
+            // province: r.address.province,
+            cityName: r.address.city
+          }
+          _this.$store.commit('CHANGE_PROVINCE_CITY_MAP', {
+            mapProvinceCityInfo: param
+          })
+          _this.center = { lng: r.longitude, lat: r.latitude } // 设置center属性值
+          _this.autoLocationPoint = { lng: r.longitude, lat: r.latitude } // 自定义覆盖物
+          _this.initLocation = true
+          // _this.$store.commit('CHANGE_MAP_CENTER_DATA', {mapCenterData: _this.center})
+          // console.log('center:', _this.center) // 如果这里直接使用this是不行的
+        },
+        { enableHighAccuracy: true }
+      )
     }
   },
   watch: {
@@ -201,7 +220,7 @@ export default {
   .el-tag {
     margin-left: 5px;
   }
-  .detail{
+  .detail {
     height: 2rem;
     line-height: 2rem;
   }

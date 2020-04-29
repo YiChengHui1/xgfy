@@ -6,10 +6,9 @@
         <Card class="card">
           <div class="card-left">
             <div class="card-left-top">
-              <h4 class="card-left-top-title">同乘车辆查询</h4>
+              <h4 class="card-left-top-title">同乘车辆查询：</h4>
               <Form
                 ref="formCustom"
-                label-position="left"
                 :model="formCustom"
                 :rules="ruleCustom"
                 :label-width="80"
@@ -79,8 +78,10 @@
             </div>
           </div>
           <div class="card-right">
+            <p>确诊人员乘坐交通的信息</p>
             <div class="card-right-content">
-              <div
+              <vehicles-table :vehiclesData="trainInfoPageData"></vehicles-table>
+              <!-- <div
                 class="content-item"
                 v-for="trainInfo in trainInfoPageData"
                 :key="trainInfo.value"
@@ -95,7 +96,7 @@
                   <p>{{`日期：${trainInfo.date}`}}</p>
                   <p v-if="trainInfo.source!==''"><a :href="trainInfo.source">查看详情>></a></p>
                 </div>
-              </div>
+              </div> -->
             </div>
             <Page
               v-if="trainInfoPageData!==[]"
@@ -117,6 +118,7 @@
 <script>
 import Header from '@/components/common/header'
 import { getSameRideAll, getSameRide1 } from '@/api/data.js'
+import VehiclesTable from '@/components/table/vehicles'
 export default {
   data () {
     const dateCheck = (rule, value, callback) => {
@@ -151,7 +153,7 @@ export default {
       isHaveData: false, // 是否有疫情信息
       allTrainInfo: {}, // 所有车辆疫情信息
       pageId: 1, // 当前页码
-      pageSize: 9, // M每页条数
+      pageSize: 10, // M每页条数
       trainInfoPageData: [], // 每页的车辆疫情信息
       typeList: [
         '',
@@ -167,7 +169,8 @@ export default {
     }
   },
   components: {
-    'common-header': Header
+    'common-header': Header,
+    'vehicles-table': VehiclesTable
   },
   methods: {
     handleChange (dateValue) {
@@ -233,9 +236,8 @@ export default {
       const tablePush = []
       // console.log(pagesize, current)
       this.allTrainInfo.forEach((item, index) => {
-        if (item.type !== 1 && item.type !== 2) {
-          // console.log(item, item.type, 1, 2)
-        }
+        item.car_type = this.typeList[item.type]
+        console.log(item.type)
         if (
           pagesize * (current - 1) <= index &&
           index <= pagesize * current - 1
@@ -244,6 +246,7 @@ export default {
         }
       })
       this.trainInfoPageData = tablePush
+      console.log(this.trainInfoPageData)
       // return tablePush
     },
     handleSubmit (name) {
@@ -286,32 +289,48 @@ export default {
         display: flex;
         .card-left {
           width: 25%;
-          padding: 1rem;
+          padding: 0 1rem;
           height: 100%;
-          border: 1px solid #b9e5f7;
-          border-radius: 0.5rem;
+          border-right: 2px solid #ccc;
+          color: #000;
+          // font-weight: 500;
+          // border-radius: 0.5rem;
           .card-left-top {
             width: 100%;
             .card-left-top-title {
               font-size: 1rem;
-              font-weight: 500;
+              font-weight: 400;
+              margin-bottom: 1rem;
+            }
+            .ivu-form {
+              .ivu-form-item {
+                .ivu-form-item-label {
+                  color: #000;
+                  font-weight: 500;
+                }
+              }
+              .ivu-btn-default{
+                color: #000;
+              }
             }
           }
           .card-left-bottom {
             width: 100%;
+            color: #000;
           }
         }
         .card-right {
           width: 75%;
           height: 100%;
-          border: 1px solid #b9e5f7;
+          // border: 1px solid #b9e5f7;
           border-radius: 0 0.5rem 0.5rem 0;
           border-left: none;
-          padding: 1rem;
+          padding: 0 1rem;
           transform: translateX(-0.2rem);
           .card-right-content {
             width: 100%;
-            padding: 0.5rem 1.5rem;
+            height: 25rem;
+            // padding: 0.5rem 1.5rem;
             .content-item {
               width: 100%;
               border-bottom: 1px solid #ccc;
