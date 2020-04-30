@@ -49,8 +49,8 @@ export default {
           triggerOn: 'mousemove',
           formatter: function (e, t, n) {
             return !e.value && e.value !== 0
-              ? e.name + '：暂无数据'
-              : e.name + '<br />' + e.seriesName + '：' + e.value
+              ? e.name + '：暂无数据' + '<br />' + '点击跳转下一级'
+              : e.name + '<br />' + e.seriesName + '：' + e.value + '<br />' + '点击跳转下一级'
           }
         },
         visualMap: {

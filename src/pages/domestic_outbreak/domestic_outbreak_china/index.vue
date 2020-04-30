@@ -13,7 +13,7 @@
           >
             <p class="card-item card-name">{{cardItem.title? cardItem.title:'暂无数据'}}</p>
             <p class="card-item card-total-num">{{cardItem.totalNum? cardItem.totalNum:'暂无数据'}}</p>
-            <p class="card-item card-add-num">较昨日<span>{{cardItem.addNum? `${cardItem.addNum>0?'+'+cardItem.addNum:cardItem.addNum}`:'暂无数据'}}</span></p>
+            <p class="card-item card-add-num">较昨日<span>{{cardItem.addNum || cardItem.addNum===0? `${cardItem.addNum>=0?'+'+cardItem.addNum:cardItem.addNum}`:'暂无数据'}}</span></p>
           </Card>
         </div>
       </div>
@@ -246,6 +246,7 @@ export default {
     },
     // 整理首页六个卡片数据
     getSixCardData (result) {
+      console.log(result)
       this.cardContent.forEach(item => {
         switch (item.status) {
           case 'confirm':

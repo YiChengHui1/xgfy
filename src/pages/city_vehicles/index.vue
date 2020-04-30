@@ -237,7 +237,6 @@ export default {
       // console.log(pagesize, current)
       this.allTrainInfo.forEach((item, index) => {
         item.car_type = this.typeList[item.type]
-        console.log(item.type)
         if (
           pagesize * (current - 1) <= index &&
           index <= pagesize * current - 1
@@ -246,7 +245,6 @@ export default {
         }
       })
       this.trainInfoPageData = tablePush
-      console.log(this.trainInfoPageData)
       // return tablePush
     },
     handleSubmit (name) {
