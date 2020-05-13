@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     drawChart () {
-      // console.log(this.worldAreaData)
       // 基于准备好的dom，初始化echarts实例
       this.$echarts.registerMap('china', chinaJson)
       const dom = document.getElementById('word-map')
@@ -39,7 +38,6 @@ export default {
         tooltip: {
           triggerOn: 'mousemove',
           formatter: function (e, t, n) {
-            // console.log(e.name, e.seriesName, e.data.value[that.geoIndex], convertEN2CN(e.name))
             convertEN2CN('China')
             if (e.data) {
               if (e.data.value[that.geoIndex] || e.data.value[that.geoIndex] === 0) {

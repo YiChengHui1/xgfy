@@ -246,7 +246,6 @@ export default {
     },
     // 整理首页六个卡片数据
     getSixCardData (result) {
-      console.log(result)
       this.cardContent.forEach(item => {
         switch (item.status) {
           case 'confirm':

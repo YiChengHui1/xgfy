@@ -90,12 +90,10 @@ export default {
           res.data.data.splice(0, 1)
         }
         this.rumorList = res.data.data
-        // console.log(this.rumorList)
       }
     },
     // 跳转谣言详情页面
     jumpRumorDetails (rumor) {
-      // console.log(111, rumor)
       this.$store.commit('CHANGE_CHOOSE_RUMOR_ID', {chooseRumorId: rumor.id})
       this.$router.push({ path: '/rumor/detail' })
     }

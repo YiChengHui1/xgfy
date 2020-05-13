@@ -64,25 +64,6 @@ export default {
           title: '累计治愈',
           key: 'cure_cnt',
           sortable: true
-          // sortMethod: function (a, b, type) {
-          //   let at = a
-          //   let bt = b
-          //   if (typeof (a) === 'string') {
-          //     at = 0
-          //   }
-          //   if (typeof (b) === 'string') {
-          //     bt = 0
-          //   }
-          //   console.log(at, bt)
-          //   // if(type==='desc'){
-
-          //   // }
-          //   if (type === 'desc') {
-          //     return at >= bt ? bt : at
-          //   } else return at >= bt ? at : bt
-          // }
-
-          // sortable: true
         },
         {
           title: '累计死亡',

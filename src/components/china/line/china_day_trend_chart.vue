@@ -22,13 +22,11 @@ export default {
     // 整理数据
     sortData () {
       if (this.chartData) {
-        // console.log(this.chartData.items)
         this.chartName = this.chartData.name
         this.chartData.items.forEach(item => {
           this.legendData.push(item.name)
           this.legendColor.push(item.color)
         })
-        // console.log(this.chartData.datas)
         this.chartData.datas.forEach(item2 => {
           this.xAxisData.push(item2.date)
           this.newsuspectData.push(Number(item2.newsuspect))

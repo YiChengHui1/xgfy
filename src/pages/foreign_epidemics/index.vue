@@ -216,11 +216,6 @@ export default {
               name: convertCN2EN(item.country),
               value: [item.present, item.sure_cnt, item.die_cnt, item.cure_cnt]
             })
-
-            // console.log(item.country, countryList2.filter(item2 => item2 === item.country))
-            // if (countryList2.filter(item2 => item2 === item.country).length === 0) {
-            //   console.log(item.country)
-            // }
           })
           this.isWorldMapShow = true
         }

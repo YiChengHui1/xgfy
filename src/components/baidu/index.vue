@@ -159,8 +159,6 @@ export default {
           _this.center = { lng: r.longitude, lat: r.latitude } // 设置center属性值
           _this.autoLocationPoint = { lng: r.longitude, lat: r.latitude } // 自定义覆盖物
           _this.initLocation = true
-          // _this.$store.commit('CHANGE_MAP_CENTER_DATA', {mapCenterData: _this.center})
-          // console.log('center:', _this.center) // 如果这里直接使用this是不行的
         },
         { enableHighAccuracy: true }
       )

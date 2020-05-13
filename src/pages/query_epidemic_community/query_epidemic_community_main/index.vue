@@ -18,7 +18,7 @@ export default {
   data () {
     return {
       options: provinceAndCityDataPlus,
-      selectedOptions: ['340000', '340100'], // 默认是安徽省合肥市
+      selectedOptions: ['340000', '340100'], // 默认是北京
       data: []
     }
   },

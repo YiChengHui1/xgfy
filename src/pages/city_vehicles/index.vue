@@ -125,7 +125,6 @@ export default {
       if (value === '') {
         callback(new Error('请选择日期'))
       } else {
-        // console.log(value)
         callback()
       }
     }
@@ -190,13 +189,8 @@ export default {
         (day <= 9 ? '0' + day : day) +
         ' '
       )
-
-      // let tzoffset = (new Date()).getTimezoneOffset() * 60000
-      // let finishTime = (new Date(Date.parse(dateTime) - tzoffset)).toISOString()
-      // console.log(finishTime)
     },
     async getSameRide1Fun () {
-      // this.dateFormatter(this.formCustom.date)
       if (String(this.formCustom.date).indexOf('GMT+0800') !== -1) {
         this.formCustom.date = this.dateFormatter(this.formCustom.date)
       }
@@ -218,7 +212,6 @@ export default {
           this.isShowInfoResult = false
         }
       }
-      // console.log(res)
     },
     async getSameRideAllFun () {
       let res = await getSameRideAll()
@@ -234,7 +227,6 @@ export default {
     // 实现分页
     paging (pagesize, current) {
       const tablePush = []
-      // console.log(pagesize, current)
       this.allTrainInfo.forEach((item, index) => {
         item.car_type = this.typeList[item.type]
         if (
@@ -245,14 +237,11 @@ export default {
         }
       })
       this.trainInfoPageData = tablePush
-      // return tablePush
     },
     handleSubmit (name) {
       this.$refs[name].validate(valid => {
         if (valid) {
           this.getSameRide1Fun()
-          // console.log(this.formCustom.date, this.formCustom.trainNumberCheck)
-          //
         } else {
           this.$Message.error('请输入完整信息!')
         }

@@ -84,10 +84,8 @@ export default {
         id: this.chooseRumorId
       }
       let res = await getRumorDetail(params)
-      // console.log(res)
       if (res.status === 200) {
         this.rumor = res.data.data
-        // console.log(this.rumor)
       }
     }
   },

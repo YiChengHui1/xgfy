@@ -73,7 +73,6 @@ export default {
   watch: {
     isModalShow: function (newValue, oldValue) {
       this.dialogTableVisible = newValue
-      // console.log(this.modal1)
     }
   }
 }
