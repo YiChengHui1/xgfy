@@ -261,7 +261,7 @@ export default {
     }
     .middle-content {
       width: 100%;
-      padding: 1rem 2rem;
+      padding: 1rem 2rem 0;
       display: flex;
       .middle-content-left {
         width: 50%;

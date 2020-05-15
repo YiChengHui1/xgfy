@@ -152,7 +152,7 @@ export default {
       isHaveData: false, // 是否有疫情信息
       allTrainInfo: {}, // 所有车辆疫情信息
       pageId: 1, // 当前页码
-      pageSize: 10, // M每页条数
+      pageSize: 9, // M每页条数
       trainInfoPageData: [], // 每页的车辆疫情信息
       typeList: [
         '',

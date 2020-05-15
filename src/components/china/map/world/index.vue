@@ -18,7 +18,7 @@ export default {
   methods: {
     drawChart () {
       // 基于准备好的dom，初始化echarts实例
-      this.$echarts.registerMap('china', chinaJson)
+      this.$echarts.registerMap('world', chinaJson)
       const dom = document.getElementById('word-map')
       let myChart = this.$echarts.init(dom)
       setTimeout(function () {
@@ -53,7 +53,7 @@ export default {
           max: 1000,
           left: 10,
           bottom: 40,
-          showLabel: false,
+          showLabel: true,
           dimension: this.geoIndex,
           // text: ['高', '低'],
           pieces: [
@@ -101,7 +101,7 @@ export default {
           show: !0
         },
         geo: {
-          map: 'china',
+          map: 'world',
           roam: true, // 开启缩放和平移
           scaleLimit: {
             min: 1,
