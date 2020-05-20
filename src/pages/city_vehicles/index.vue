@@ -352,7 +352,7 @@ export default {
             }
           }
           .pager {
-            margin-left: 50%;
+            margin-left: 40%;
           }
         }
       }

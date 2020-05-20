@@ -43,18 +43,7 @@
           @close="infoWindowClose(index)"
           @open="infoWindowOpen(index)"
         >
-          <el-tag effect="dark">{{item.province}}</el-tag>
-
-          <el-tag
-            type="warning"
-            effect="dark"
-          >{{item.city}}</el-tag>
-
-          <el-tag
-            type="danger"
-            effect="dark"
-          >{{item.county}}</el-tag>
-
+          <h4>疫情详细信息</h4>
           <p class="detail">{{`详细地址:${item.detail}`}}</p>
           <p>发布时间:{{item.updateTime}}</p>
         </bm-info-window>
