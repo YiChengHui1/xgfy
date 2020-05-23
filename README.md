@@ -2,6 +2,18 @@
 
 > A Vue.js project
 
+## Technology Introduction
+本系统由Vue cli2.x搭建
+路由管理使用vue-router
+状态管理器使用vuex
+图表库使用echarts
+地图插件使用vue-baidu-map
+发送请求使用axios
+UI框架全局引入iview,按需引入elemant-ui
+
+## Function Introduction
+这是一个肺炎系统，本系统包含7个模块。它们分别是：国内疫情、国外疫情、疫情小区查询、疫情辟谣、口罩信息、车辆查询和联系我们模块
+
 ## Build Setup
 
 ``` bash
