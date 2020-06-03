@@ -1,18 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import DomesticOutbreak from '@/pages/domestic_outbreak'
-import DomesticOutbreakContainer from '@/pages/domestic_outbreak/domestic_outbreak_container'
-import DomesticOutbreakMain from '@/pages/domestic_outbreak/domestic_outbreak_china'
-import ForeignEpidemics from '@/pages/foreign_epidemics'
-import QueryEpidemicCommunity from '@/pages/query_epidemic_community'
-import QueryEpidemicCommunityMain from '@/pages/query_epidemic_community/query_epidemic_community_main'
-import Rumor from '@/pages/outbreak'
-import RumorList from '@/pages/outbreak/outbreak_list'
-import RumorDetail from '@/pages/outbreak/outbreak_detail'
-import DomesticOutbreakProvice from '@/pages/domestic_outbreak/domestic_outbreak_provice'
-import MaskInfo from '@/pages/mask_information'
-import MaskMain from '@/pages/mask_information/mask_main'
-import CityVehicles from '@/pages/city_vehicles'
+
 Vue.use(Router)
 
 export default new Router({
@@ -21,24 +9,24 @@ export default new Router({
       // 国内疫情
       path: '/',
       name: 'COVID-19',
-      component: DomesticOutbreak,
+      component: (resolve) => require(['@/pages/domestic_outbreak/index.vue'], resolve),
       redirect: '/dashboard',
       children: [
         {
           path: '/dashboard',
           name: 'dashboard',
-          component: DomesticOutbreakContainer,
+          component: (resolve) => require(['@/pages/domestic_outbreak/domestic_outbreak_container/index.vue'], resolve),
           redirect: '/dashboard/china',
           children: [
             {
               path: '/dashboard/china',
               name: 'china',
-              component: DomesticOutbreakMain
+              component: (resolve) => require(['@/pages/domestic_outbreak/domestic_outbreak_china/index.vue'], resolve)
             },
             {
               path: '/dashboard/province',
               name: 'province',
-              component: DomesticOutbreakProvice
+              component: (resolve) => require(['@/pages/domestic_outbreak/domestic_outbreak_provice/index.vue'], resolve)
             }]
         }]
     },
@@ -46,58 +34,58 @@ export default new Router({
       // 国外疫情
       path: '/foreign_epidemics',
       name: 'foreign_epidemics',
-      component: ForeignEpidemics
+      component: (resolve) => require(['@/pages/foreign_epidemics/index.vue'], resolve)
     },
     {
       // 疫情小区查询
       path: '/query_epidemic_community',
       name: 'query_epidemic_community',
-      component: QueryEpidemicCommunity,
+      component: (resolve) => require(['@/pages/query_epidemic_community/index.vue'], resolve),
       redirect: '/query_epidemic_community/baidu_map',
       children: [{
         path: '/query_epidemic_community/baidu_map',
         name: 'baidu_map',
-        component: QueryEpidemicCommunityMain
+        component: (resolve) => require(['@/pages/query_epidemic_community/query_epidemic_community_main/index.vue'], resolve)
       }]
     },
     {
       // 谣言
       path: '/rumor',
       name: 'rumor',
-      component: Rumor,
+      component: (resolve) => require(['@/pages/outbreak/index.vue'], resolve),
       redirect: '/rumor/list',
       children: [
         {
           // 谣言列表
           path: '/rumor/list',
           name: 'list',
-          component: RumorList
+          component: (resolve) => require(['@/pages/outbreak/outbreak_list/index.vue'], resolve)
         },
         {
           // 谣言详细信息
           path: '/rumor/detail',
           name: 'detail',
-          component: RumorDetail
+          component: (resolve) => require(['@/pages/outbreak/outbreak_detail/index.vue'], resolve)
         }
       ]
     },
     {
       path: '/mask',
       name: 'mask',
-      component: MaskInfo,
+      component: (resolve) => require(['@/pages/mask_information/index.vue'], resolve),
       redirect: '/mask/info',
       children: [
         {
           path: '/mask/info',
           name: 'info',
-          component: MaskMain
+          component: (resolve) => require(['@/pages/mask_information/mask_main/index.vue'], resolve)
         }
       ]
     },
     {
       path: '/cityvehicles',
       name: 'cityvehicles',
-      component: CityVehicles
+      component: (resolve) => require(['@/pages/city_vehicles/index.vue'], resolve)
     }
   ]
 })
